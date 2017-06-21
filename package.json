@@ -1,6 +1,6 @@
 {
   "name": "cz-mysky-jira",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Commitizen adapter for CZ-CLI in MYSKY project.",
   "main": "index.js",
   "scripts": {
@@ -8,6 +8,14 @@
     "test": "echo 'Tests need to be setup!'",
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
+  "config": {
+        "validate-commit-msg": {
+            "maxSubjectLength": 100
+        },
+        "commitizen": {
+            "path": "cz-mysky-jira"
+        }
+    },
   "homepage": "https://github.com/kalmurzayev/cz-mysky-jira",
   "repository": {
     "type": "git",
@@ -25,8 +33,5 @@
   "devDependencies": {
     "commitizen": "2.9.6",
     "semantic-release": "^6.3.2"
-  },
-  "czConfig": {
-    "path": "./"
   }
 }

@@ -58,7 +58,7 @@ module.exports = function (options) {
         }, {
           type: 'input',
           name: 'scope',
-          message: 'JIRA task number::\n'
+          message: 'JIRA task number:\n'
         }, {
           type: 'input',
           name: 'subject',
@@ -89,7 +89,7 @@ module.exports = function (options) {
 
         // parentheses are only needed when a scope is present
         var scope = answers.scope.trim();
-        scope = scope ? '(' + answers.scope.trim() + ')' : '';
+        scope = scope ? '(' + jiraProjectId + '-' +  answers.scope.trim() + ')' : '';
 
         // Hard limit this line
         var head = (answers.type + scope + ': ' + answers.subject.trim()).slice(0, maxLineWidth);
