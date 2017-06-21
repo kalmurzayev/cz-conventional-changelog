@@ -1,6 +1,6 @@
 {
   "name": "cz-mysky-jira",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Commitizen adapter for CZ-CLI in MYSKY project.",
   "main": "index.js",
   "scripts": {
