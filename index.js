@@ -20,9 +20,6 @@ var conventionalCommitTypes = {
     },
     "build": {
       "description": "Changes that affect the build system or external dependencies (example scopes: gulp, broccoli, npm)"
-    },
-    "misc": {
-      "description": "Other changes that don't modify src or test files"
     }
   }
 };
