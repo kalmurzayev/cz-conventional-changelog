@@ -57,16 +57,24 @@ module.exports = function (options) {
           choices: choices
         }, {
           type: 'input',
-          name: 'JIRA task number',
-          message: 'Enter the JIRA task number:\n'
+          name: 'scope',
+          message: 'JIRA task number::\n'
         }, {
           type: 'input',
           name: 'subject',
           message: 'Write a short, imperative tense description of the change:\n'
         }, {
           type: 'input',
+          name: 'body',
+          message: 'Provide a longer description of the change:\n'
+        }, {
+          type: 'input',
           name: 'breaking',
           message: 'List any breaking changes:\n'
+        }, {
+          type: 'input',
+          name: 'issues',
+          message: 'List any issues closed by this change:\n'
         }
       ]).then(function(answers) {
 
@@ -81,7 +89,7 @@ module.exports = function (options) {
 
         // parentheses are only needed when a scope is present
         var scope = answers.scope.trim();
-        scope = scope ? '(' + jiraProjectId + '-' + answers.scope.trim() + ')' : '';
+        scope = scope ? '(' + answers.scope.trim() + ')' : '';
 
         // Hard limit this line
         var head = (answers.type + scope + ': ' + answers.subject.trim()).slice(0, maxLineWidth);
@@ -94,7 +102,11 @@ module.exports = function (options) {
         breaking = breaking ? 'BREAKING CHANGE: ' + breaking.replace(/^BREAKING CHANGE: /, '') : '';
         breaking = wrap(breaking, wrapOptions);
 
-        commit(head + '\n\n' + body + '\n\n' + breaking);
+        var issues = wrap(answers.issues, wrapOptions);
+
+        var footer = filter([ breaking, issues ]).join('\n\n');
+
+        commit(head + '\n\n' + body + '\n\n' + footer);
       });
     }
   };
