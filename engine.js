@@ -10,7 +10,7 @@ var filter = function(array) {
     return x;
   });
 };
-
+var jiraProjectId = "MYSKY";
 // This can be any kind of SystemJS compatible module.
 // We use Commonjs here, but ES6 or AMD would do just
 // fine.
@@ -39,7 +39,8 @@ module.exports = function (options) {
     // By default, we'll de-indent your commit
     // template and will keep empty lines.
     prompter: function(cz, commit) {
-      console.log('\nLine 1 will be cropped at 100 characters. All other lines will be wrapped after 100 characters.\n');
+      console.log('\nWelcome to MYSKY commitizen CLI');
+      console.log('\nMake sure to include your ticket number and short description\n');
 
       // Let's ask some questions of the user
       // so that we can populate our commit
@@ -56,24 +57,16 @@ module.exports = function (options) {
           choices: choices
         }, {
           type: 'input',
-          name: 'scope',
-          message: 'Denote the scope of this change ($location, $browser, $compile, etc.):\n'
+          name: 'JIRA task number',
+          message: 'Enter the JIRA task number:\n'
         }, {
           type: 'input',
           name: 'subject',
           message: 'Write a short, imperative tense description of the change:\n'
         }, {
           type: 'input',
-          name: 'body',
-          message: 'Provide a longer description of the change:\n'
-        }, {
-          type: 'input',
           name: 'breaking',
           message: 'List any breaking changes:\n'
-        }, {
-          type: 'input',
-          name: 'issues',
-          message: 'List any issues closed by this change:\n'
         }
       ]).then(function(answers) {
 
@@ -88,7 +81,7 @@ module.exports = function (options) {
 
         // parentheses are only needed when a scope is present
         var scope = answers.scope.trim();
-        scope = scope ? '(' + answers.scope.trim() + ')' : '';
+        scope = scope ? '(' + jiraProjectId + '-' + answers.scope.trim() + ')' : '';
 
         // Hard limit this line
         var head = (answers.type + scope + ': ' + answers.subject.trim()).slice(0, maxLineWidth);
@@ -101,11 +94,7 @@ module.exports = function (options) {
         breaking = breaking ? 'BREAKING CHANGE: ' + breaking.replace(/^BREAKING CHANGE: /, '') : '';
         breaking = wrap(breaking, wrapOptions);
 
-        var issues = wrap(answers.issues, wrapOptions);
-
-        var footer = filter([ breaking, issues ]).join('\n\n');
-
-        commit(head + '\n\n' + body + '\n\n' + footer);
+        commit(head + '\n\n' + body + '\n\n' + breaking);
       });
     }
   };
