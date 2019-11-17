@@ -39,7 +39,7 @@ module.exports = function (options) {
     // By default, we'll de-indent your commit
     // template and will keep empty lines.
     prompter: function(cz, commit) {
-      console.log('\nWelcome to MYSKY commitizen CLI');
+      console.log('\nWelcome to Strong commitizen CLI');
       console.log('\nMake sure to include your ticket number and short description\n');
 
       // Let's ask some questions of the user
@@ -49,34 +49,23 @@ module.exports = function (options) {
       // See inquirer.js docs for specifics.
       // You can also opt to use another input
       // collection library if you prefer.
-      cz.prompt([
+      var inputs = [
         {
           type: 'list',
           name: 'type',
-          message: 'Select the type of change that you\'re committing:',
+          message: 'Выберите тип изменения кода:',
           choices: choices
         }, {
           type: 'input',
           name: 'scope',
-          message: 'JIRA task number:\n'
+          message: 'К какой JIRA задачке привязать? (можно пропустить):\n'
         }, {
           type: 'input',
           name: 'subject',
-          message: 'Write a short, imperative tense description of the change:\n'
-        }, {
-          type: 'input',
-          name: 'body',
-          message: 'Provide a longer description of the change:\n'
-        }, {
-          type: 'input',
-          name: 'breaking',
-          message: 'List any breaking changes:\n'
-        }, {
-          type: 'input',
-          name: 'issues',
-          message: 'List any issues closed by this change:\n'
+          message: 'Сообщение для коммита:\n'
         }
-      ]).then(function(answers) {
+      ]
+      cz.prompt(inputs).then(function(answers) {
 
         var maxLineWidth = 100;
 
@@ -93,20 +82,7 @@ module.exports = function (options) {
 
         // Hard limit this line
         var head = (answers.type + scope + ': ' + answers.subject.trim()).slice(0, maxLineWidth);
-
-        // Wrap these lines at 100 characters
-        var body = wrap(answers.body, wrapOptions);
-
-        // Apply breaking change prefix, removing it if already present
-        var breaking = answers.breaking.trim();
-        breaking = breaking ? 'BREAKING CHANGE: ' + breaking.replace(/^BREAKING CHANGE: /, '') : '';
-        breaking = wrap(breaking, wrapOptions);
-
-        var issues = wrap(answers.issues, wrapOptions);
-
-        var footer = filter([ breaking, issues ]).join('\n\n');
-
-        commit(head + '\n\n' + body + '\n\n' + footer);
+        commit(head);
       });
     }
   };

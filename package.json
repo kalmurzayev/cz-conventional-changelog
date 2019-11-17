@@ -1,5 +1,5 @@
 {
-  "name": "cz-mysky-jira",
+  "name": "cz-strong-jira",
   "version": "0.0.4",
   "description": "Commitizen adapter for CZ-CLI in MYSKY project.",
   "main": "index.js",
@@ -9,17 +9,17 @@
     "semantic-release": "semantic-release pre && npm publish && semantic-release post"
   },
   "config": {
-        "validate-commit-msg": {
-            "maxSubjectLength": 100
-        },
-        "commitizen": {
-            "path": "cz-mysky-jira"
-        }
+    "validate-commit-msg": {
+      "maxSubjectLength": 100
     },
-  "homepage": "https://github.com/kalmurzayev/cz-mysky-jira",
+    "commitizen": {
+      "path": "cz-strong-jira"
+    }
+  },
+  "homepage": "https://github.com/kalmurzayev/cz-strong-jira",
   "repository": {
     "type": "git",
-    "url": "https://github.com/kalmurzayev/cz-mysky-jira.git"
+    "url": "https://github.com/kalmurzayev/cz-strong-jira.git"
   },
   "author": "Jim Cummins <jimthedev@gmail.com>",
   "license": "MIT",
